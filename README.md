@@ -1,7 +1,20 @@
 # Golf Getaway 2027
 
-Planning page for the Jacksonville & St. Augustine golf trip: date options (4 or 5 days, July or spring), four house options with prices, the golf lineup, and the week's schedule.
+Sign-up and voting page for the Jacksonville & St. Augustine golf trip. Anyone with the link can sign up, no account needed. Sign-ups save to Firebase (Firestore, anonymous sign-in).
 
-Open `index.html` in a browser, or turn on GitHub Pages for this repo to get a link.
+## Setup
 
-Sign-ups and voting only work on the claude.ai version of the page, which saves them to Claude's storage. This copy shows the trip details and prices but can't take sign-ups.
+1. In Firebase, use a project (Fairway Ledger's is fine) with **Anonymous** sign-in turned on.
+2. Add this to the project's Firestore rules, inside `match /databases/{database}/documents { ... }`:
+
+```
+match /golfSignups/{uid} {
+  allow read: if true;
+  allow write: if request.auth != null && request.auth.uid == uid;
+}
+```
+
+3. Paste the project's web config into `FIREBASE_CONFIG` near the top of the script in `index.html`.
+4. Turn on GitHub Pages (Settings → Pages → main / root).
+
+Sign-ups are tied to the browser they were made in. To remove someone's entry, delete their document in the Firebase console under `golfSignups`.

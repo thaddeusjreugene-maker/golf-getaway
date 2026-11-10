@@ -152,7 +152,7 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   <div class="houses" id="houses"></div>
 
   <h2 id="signup">3. Sign up</h2>
-  <p class="sub">One sign-up per household. Come back and change it anytime.</p>
+  <p class="sub">One sign-up per household. No account needed. To change it later, come back on the same phone or computer.</p>
   <div class="card">
     <div class="notice" id="gate" hidden></div>
     <form id="form" novalidate>
@@ -247,6 +247,57 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   <footer>Planning page · Prices are estimates until booked</footer>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ===== PASTE YOUR FIREBASE CONFIG HERE ===== */
+window.FIREBASE_CONFIG = {
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
+};
+/* ========================================== */
+(function(){
+  var COL='golfSignups', ready=null;
+  function init(){
+    if(ready) return ready;
+    ready=new Promise(function(res){
+      try{
+        var c=window.FIREBASE_CONFIG;
+        if(!c||!c.apiKey||!window.firebase){res(null);return}
+        var app=firebase.apps.length?firebase.app():firebase.initializeApp(c);
+        firebase.auth().signInAnonymously()
+          .then(function(cred){res({uid:cred.user.uid,fs:firebase.firestore()})})
+          .catch(function(){res(null)});
+      }catch(e){res(null)}
+    });
+    return ready;
+  }
+  window.claude={use:function(name){
+    return init().then(function(ctx){
+      if(!ctx) return null;
+      if(name==='user') return {
+        id:function(){return Promise.resolve(ctx.uid)},
+        isOwner:function(){return Promise.resolve(false)},
+        can:function(){return Promise.resolve(true)}
+      };
+      if(name==='db') return {
+        collection:function(){return {onSnapshot:function(next,err){
+          return ctx.fs.collection(COL).onSnapshot({includeMetadataChanges:true},function(s){
+            next({docs:s.docs.map(function(d){return {id:d.id,exists:d.exists,data:function(){return d.data()}}}),metadata:{fromCache:s.metadata.fromCache}});
+          },function(e){err&&err({code:'unavailable',message:String(e&&e.message)})});
+        }}},
+        doc:function(path){var r=ctx.fs.collection(COL).doc(path.split('/')[1]);return {set:function(b){return r.set(b)},delete:function(){return r.delete()}}}
+      };
+      return null;
+    });
+  }};
+})();
+</script>
 <script>
 (function(){
   var TRIPS=[
@@ -403,10 +454,10 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   async function start(){
     setMsg('Connecting…');
     try{ db=await claude.use('db'); user=await claude.use('user'); }catch(e){ db=null; }
-    if(!db||!user){ setMsg(''); gate('Sign-ups work when this page is open on claude.ai and you are signed in. You can still look at the dates and houses.'); render(); return; }
+    if(!db||!user){ setMsg(''); gate('Sign-ups aren\'t switched on yet. You can still look at the dates and houses.'); render(); return; }
     me=await user.id(); isOwner=await user.isOwner();
     var canW=await user.can('data.write');
-    if(!me){ gate('Sign in to claude.ai to sign up.'); }
+    if(!me){ gate('Sign-ups could not start. Reload the page to try again.'); }
     else if(canW===false && !isOwner){ readOnly=true; gate('You can see the sign-ups but can\'t add yours yet. Ask Thad to share the page with you as an editor.'); }
     var timer=setTimeout(function(){ if(!loaded) setMsg('Sign-ups are slow to load. Check your connection.','err'); },10000);
     db.collection('signups').onSnapshot(function(snap){
