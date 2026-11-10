@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Golf Getaway 2027</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: one narrow column, read top to bottom — pick dates, see houses, sign up, see who's in. Scorecard grid for the tallies. */
+:root{
+  --bg:#f3f5f1; --card:#ffffff; --fg:#17201b; --muted:#5b6a61; --line:#dde3dc;
+  --green:#1d5a3c; --green-soft:#e3eee7; --on-green:#ffffff; --sand:#b8862f; --sand-soft:#f6edda; --bad:#a3382b;
+  --display:"Sora",ui-sans-serif,system-ui,sans-serif; --body:"Inter",ui-sans-serif,system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#111613; --card:#19201c; --fg:#e8eee9; --muted:#9aa89f; --line:#2b3530;
+  --green:#7fc79d; --green-soft:#1d2b23; --on-green:#0f1612; --sand:#d9b46a; --sand-soft:#2a2418; --bad:#e58a7d; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#111613; --card:#19201c; --fg:#e8eee9; --muted:#9aa89f; --line:#2b3530;
+  --green:#7fc79d; --green-soft:#1d2b23; --on-green:#0f1612; --sand:#d9b46a; --sand-soft:#2a2418; --bad:#e58a7d; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.5 var(--body)}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h2{font-size:19px;margin:30px 0 4px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.num{font-variant-numeric:tabular-nums}
+a{color:var(--green)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--sand);outline-offset:2px}
+
+.top{background:var(--green);color:var(--on-green)}
+.top .wrap{padding-block:26px 22px}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+.top h1{font-size:27px;margin:4px 0 6px}
+.top p{margin:0;font-size:14px;opacity:.92}
+.cta{display:inline-block;margin-top:14px;background:var(--on-green);color:var(--green);font-weight:700;text-decoration:none;padding:9px 16px;border-radius:999px;font-size:14px}
+
+.trips{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.trip{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px}
+.trip .k{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.trip h3{font-size:17px;margin:2px 0 1px}
+.trip .d{font-size:13px;color:var(--muted)}
+.trip dl{display:grid;grid-template-columns:1fr auto;gap:3px 8px;margin:10px 0 0;font-size:13px}
+.trip dt{color:var(--muted)}
+.trip dd{margin:0;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.trip.lead{border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green)}
+.badge{display:inline-block;font-family:var(--body);font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--green);color:var(--on-green);margin-left:6px;vertical-align:2px}
+.fine{font-size:12.5px;color:var(--muted);margin:8px 0 0}
+
+.houses{display:grid;gap:8px}
+.house{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.house b{font-family:var(--display);font-size:15px}
+.house .p{font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.house .m{grid-column:1 / -1;font-size:12.5px;color:var(--muted)}
+.house .v{font-size:12px;color:var(--green);font-weight:600;margin-left:8px}
+
+form{display:grid;gap:18px}
+.lbl{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+input[type=text],textarea{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 12px;font-size:16px}
+textarea{min-height:64px;resize:vertical}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 14px;cursor:pointer;font-weight:500;font-size:14px}
+.seg input:checked + label{border-color:var(--green);background:var(--green);color:var(--on-green)}
+.seg input:disabled + label{opacity:.4;cursor:not-allowed}
+.seg input:focus-visible + label{outline:2px solid var(--sand);outline-offset:2px}
+.tripq{display:grid;gap:6px}
+.tq{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--bg)}
+.tq.on{border-color:var(--green)}
+.tq input[type=checkbox]{width:20px;height:20px;accent-color:var(--green);margin:0}
+.tq .t{font-weight:600;font-size:14px;line-height:1.25;cursor:pointer}
+.tq .t span{display:block;font-weight:400;color:var(--muted);font-size:12.5px}
+.star{display:flex;align-items:center;gap:5px;font-size:12.5px;color:var(--muted);cursor:pointer;white-space:nowrap}
+.star input{accent-color:var(--sand);width:17px;height:17px;margin:0}
+.est{background:var(--green-soft);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.est .a{font-family:var(--display);font-size:24px;color:var(--green);font-variant-numeric:tabular-nums;white-space:nowrap}
+.est .h{font-size:12.5px;color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{border:0;border-radius:999px;padding:11px 20px;font-weight:700;cursor:pointer;background:var(--green);color:var(--on-green)}
+.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);font-weight:600}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.msg{font-size:13.5px}
+.msg.ok{color:var(--green)} .msg.err{color:var(--bad)}
+.notice{background:var(--sand-soft);border-radius:10px;padding:10px 12px;font-size:13.5px;margin-bottom:14px}
+
+.score{overflow-x:auto}
+.score table{width:100%;border-collapse:collapse;font-size:13.5px}
+.score th,.score td{border:1px solid var(--line);padding:7px 6px;text-align:center;font-variant-numeric:tabular-nums}
+.score th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--bg)}
+.score td:first-child,.score th:first-child{text-align:left}
+.score td.hi{background:var(--green-soft);font-weight:700;color:var(--green)}
+.bars{display:grid;gap:7px;margin-top:14px}
+.bars .lbl{margin:0 0 2px}
+.bar{display:grid;grid-template-columns:120px 1fr 28px;gap:8px;align-items:center;font-size:13.5px}
+.bar .track{height:10px;background:var(--bg);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.bar .fill{height:100%;background:var(--sand);border-radius:999px}
+.people{display:grid;gap:8px;margin-top:10px}
+.person{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;gap:5px}
+.person .row1{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.person b{font-size:15px}
+.person .meta{font-size:12.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+.chip.fav{border-color:var(--sand);background:var(--sand-soft);font-weight:600}
+.person .note{font-size:13px;color:var(--muted);font-style:italic}
+.rm{background:none;border:0;color:var(--bad);font-size:12px;cursor:pointer;padding:0;justify-self:start}
+.empty{color:var(--muted);font-size:14px;text-align:center;padding:18px 10px;border:1px dashed var(--line);border-radius:12px}
+
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-top:10px}
+summary{cursor:pointer;padding:13px 16px;font-weight:600;font-family:var(--display);list-style:none;display:flex;justify-content:space-between}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--muted)}
+details[open] summary::after{content:"–"}
+.dbody{padding:0 16px 14px;font-size:14px}
+.dbody p{margin:0 0 10px}
+.dbody table{width:100%;border-collapse:collapse}
+.dbody td{padding:7px 4px;border-top:1px solid var(--line);vertical-align:top}
+.dbody td:first-child{font-weight:600;white-space:nowrap;width:1%;padding-right:12px}
+.phone{font-variant-numeric:tabular-nums;color:var(--muted);user-select:all}
+footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
+@media (max-width:420px){ .trips{grid-template-columns:1fr} .bar{grid-template-columns:100px 1fr 24px} }
+@media (prefers-reduced-motion:no-preference){ .fill{transition:width .3s ease} }
+</style>
+
+<div class="top">
+  <div class="wrap">
+    <div class="eyebrow">Jacksonville &amp; St. Augustine</div>
+    <h1>Golf Getaway 2027</h1>
+    <p>A week of golf, a big house with room for everyone, and evenings together. Pick the dates that work, vote on the house, and sign up.</p>
+    <a class="cta" href="#signup">Sign up</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <h2>1. Pick your dates</h2>
+  <p class="sub">Four options. House prices are per person at the Country House with 12 people. Golf is extra for golfers.</p>
+  <div class="trips" id="trips"></div>
+  <p class="fine">Spring is peak golf season, so spring golf prices are estimates. June 7–12 or June 8–12 costs the same as the July dates.</p>
+
+  <h2>2. The houses</h2>
+  <p class="sub">Vote for one when you sign up. Prices are the whole house for the 5-night July trip.</p>
+  <div class="houses" id="houses"></div>
+
+  <h2 id="signup">3. Sign up</h2>
+  <p class="sub">One sign-up per household. Come back and change it anytime.</p>
+  <div class="card">
+    <div class="notice" id="gate" hidden></div>
+    <form id="form" novalidate>
+      <div>
+        <label class="lbl" for="f-name">Your name or household</label>
+        <input type="text" id="f-name" maxlength="60" placeholder="e.g. Mark &amp; Lisa" autocomplete="name">
+      </div>
+      <div>
+        <span class="lbl">Who's coming?</span>
+        <div class="seg" role="radiogroup" aria-label="Who's coming">
+          <input type="radio" name="party" id="f-p1" value="1"><label for="f-p1">Just me</label>
+          <input type="radio" name="party" id="f-p2" value="2" checked><label for="f-p2">A couple</label>
+        </div>
+      </div>
+      <div>
+        <span class="lbl">How many will golf?</span>
+        <div class="seg" role="radiogroup" aria-label="How many will golf">
+          <input type="radio" name="golf" id="f-g0" value="0"><label for="f-g0">None</label>
+          <input type="radio" name="golf" id="f-g1" value="1" checked><label for="f-g1">1</label>
+          <input type="radio" name="golf" id="f-g2" value="2"><label for="f-g2">2</label>
+        </div>
+      </div>
+      <div>
+        <span class="lbl">Which dates work for you?</span>
+        <p class="sub" style="margin:-2px 0 8px">Check every one you could make, and star your favorite.</p>
+        <div class="tripq" id="tripq"></div>
+      </div>
+      <div>
+        <span class="lbl">Which house do you want?</span>
+        <div class="seg" id="houseq" role="radiogroup" aria-label="House vote"></div>
+      </div>
+      <div>
+        <label class="lbl" for="f-note">Anything else? <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+        <textarea id="f-note" maxlength="300" placeholder="e.g. We can't leave until Tuesday"></textarea>
+      </div>
+      <div class="est" aria-live="polite">
+        <div><div class="lbl" style="margin:0">Your estimated cost</div><div class="h" id="est-h">Star a favorite date to see it</div></div>
+        <div class="a" id="est-a">—</div>
+      </div>
+      <div class="actions">
+        <button class="btn" type="submit" id="save">Sign up</button>
+        <button class="btn ghost" type="button" id="leave" hidden>Remove my sign-up</button>
+        <span class="msg" id="msg" role="status"></span>
+      </div>
+    </form>
+  </div>
+
+  <h2>4. Who's in</h2>
+  <p class="sub" id="who-sub">Sign-ups and votes update live.</p>
+  <div class="card">
+    <div class="score"><table>
+      <thead><tr><th>Dates</th><th>Signups</th><th>People</th><th>Golfers</th><th>★</th></tr></thead>
+      <tbody id="score"></tbody>
+    </table></div>
+    <div class="bars" id="bars"></div>
+  </div>
+  <div class="people" id="people"></div>
+
+  <h2>Trip details</h2>
+  <details>
+    <summary>Golf courses</summary>
+    <div class="dbody">
+      <p>Every round starts around 8:00 AM with back-to-back tee times. The 4-day trips skip Slammer &amp; Squire.</p>
+      <table>
+        <tr><td>Round 1</td><td>The Golf Club at South Hampton<br><span class="phone">904-287-7529</span></td></tr>
+        <tr><td>Round 2</td><td>Slammer &amp; Squire, World Golf Village (5-day trips)<br><span class="phone">904-940-6088</span></td></tr>
+        <tr><td>Round 3</td><td>St. Johns Golf &amp; Country Club<br><span class="phone">904-940-3215 or 904-940-3200</span></td></tr>
+        <tr><td>Finale</td><td>King &amp; Bear, the only course Palmer and Nicklaus designed together<br><span class="phone">904-940-6088</span></td></tr>
+      </table>
+    </div>
+  </details>
+  <details>
+    <summary>What the week looks like</summary>
+    <div class="dbody">
+      <table>
+        <tr><td>Arrival</td><td>Drive down, check in, groceries, burgers at the house, pool.</td></tr>
+        <tr><td>Golf days</td><td>Golf in the morning, back by early afternoon. Non-golfers get the beach, St. Augustine, or the pool.</td></tr>
+        <tr><td>Wednesday</td><td>Group trip to historic St. Augustine for dinner and dessert.</td></tr>
+        <tr><td>Thursday</td><td>Steak night at the house.</td></tr>
+        <tr><td>Friday</td><td>King &amp; Bear finale, then the final group dinner and golf awards.</td></tr>
+        <tr><td>Saturday</td><td>Breakfast, clean up, head home.</td></tr>
+      </table>
+    </div>
+  </details>
+  <details>
+    <summary>What's not included</summary>
+    <div class="dbody">
+      <p>Prices cover your share of the house and green fees with tax. Food, gas, and spending money are extra. Plan on about $35–$50 per person per night for groceries and one dinner out.</p>
+    </div>
+  </details>
+
+  <footer>Planning page · Prices are estimates until booked</footer>
+</div>
+
+<script>
+(function(){
+  var TRIPS=[
+    {k:'J4',name:'4 days in July',d:'Tue Jul 20 – Sat Jul 24',n:4,r:3,golf:294.25},
+    {k:'J5',name:'5 days in July',d:'Mon Jul 19 – Sat Jul 24',n:5,r:4,golf:374.50},
+    {k:'S4',name:'4 days in spring',d:'Tue Mar 30 – Sat Apr 3',n:4,r:3,golf:411.95,est:true},
+    {k:'S5',name:'5 days in spring',d:'Mon Mar 29 – Sat Apr 3',n:5,r:4,golf:604.55,est:true}
+  ];
+  var HOUSES=[
+    {k:'A',name:'Country House',where:'World Golf Village · pool · 8 bedrooms',rating:'Rated 10 (119 reviews)',price:{J4:4067,J5:5030,S4:3595,S5:4428},url:'https://vrbo.onelink.me/ItNz/y057kpdi'},
+    {k:'B',name:'4 Homes in a Row',where:'Near downtown St. Augustine · 12 bedrooms',rating:'Rated 10 (1 review)',price:{J4:3851,J5:4497},url:'https://vrbo.onelink.me/ItNz/xu2fx89q'},
+    {k:'C',name:'3 Homes in a Row',where:'Near downtown St. Augustine · 9 bedrooms',rating:'Rated 10 (3 reviews)',price:{J4:2956,J5:3457},url:'https://vrbo.onelink.me/ItNz/kol5hgzs'},
+    {k:'D',name:'Canal Home',where:'Hibernia, Clay County · boat & kayak · 8 bedrooms',rating:'Rated 9.2 (34 reviews)',price:{J4:3958,J5:4776},url:'https://vrbo.onelink.me/ItNz/6akelr3s'}
+  ];
+  var PEOPLE=12;
+  function $(id){return document.getElementById(id)}
+  function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+  function money(v){return '$'+Math.round(v).toLocaleString('en-US')}
+  function tripBy(k){for(var i=0;i<TRIPS.length;i++)if(TRIPS[i].k===k)return TRIPS[i];return null}
+  function houseBy(k){for(var i=0;i<HOUSES.length;i++)if(HOUSES[i].k===k)return HOUSES[i];return null}
+
+  // static: date options
+  var tripCards={};
+  TRIPS.forEach(function(t){
+    var c=el('div','trip');
+    c.appendChild(el('div','k',t.n+' nights · '+t.r+' rounds'));
+    var h=el('h3',null,t.name); c.appendChild(h);
+    c.appendChild(el('div','d',t.d));
+    var dl=el('dl'), hp=HOUSES[0].price[t.k]/PEOPLE, p=t.est?'~':'';
+    [['House, per person',money(hp)],['Golf, per golfer',p+money(t.golf)],['Couple, both golf',p+money(hp*2+t.golf*2)]].forEach(function(r){dl.appendChild(el('dt',null,r[0]));dl.appendChild(el('dd',null,r[1]))});
+    c.appendChild(dl); $('trips').appendChild(c); tripCards[t.k]={card:c,title:h};
+  });
+  // static: houses
+  var houseVotes={};
+  HOUSES.forEach(function(hs){
+    var c=el('div','house'), top=el('div');
+    top.appendChild(el('b',null,hs.name)); var v=el('span','v',''); top.appendChild(v); c.appendChild(top);
+    c.appendChild(el('div','p',money(hs.price.J5)));
+    var m=el('div','m'); m.appendChild(document.createTextNode(hs.where+' · '+hs.rating+' · '));
+    var a=el('a',null,'View on Vrbo'); a.href=hs.url; a.target='_blank'; a.rel='noopener'; m.appendChild(a);
+    c.appendChild(m); $('houses').appendChild(c); houseVotes[hs.k]=v;
+  });
+
+  // form
+  TRIPS.forEach(function(t){
+    var row=el('div','tq'); row.id='tq-'+t.k;
+    var cb=document.createElement('input'); cb.type='checkbox'; cb.id='f-t-'+t.k;
+    var lab=el('label','t',t.name); lab.htmlFor=cb.id; lab.appendChild(el('span',null,t.d));
+    var st=el('label','star'); var rb=document.createElement('input'); rb.type='radio'; rb.name='fav'; rb.id='f-f-'+t.k; rb.value=t.k;
+    st.appendChild(rb); st.appendChild(document.createTextNode('Favorite'));
+    row.appendChild(cb); row.appendChild(lab); row.appendChild(st); $('tripq').appendChild(row);
+    cb.addEventListener('change',function(){ if(!cb.checked && rb.checked) rb.checked=false; syncForm(); });
+    rb.addEventListener('change',function(){ if(rb.checked) cb.checked=true; syncForm(); });
+  });
+  HOUSES.concat([{k:'X',name:'No preference'}]).forEach(function(h){
+    var r=document.createElement('input'); r.type='radio'; r.name='house'; r.id='f-h-'+h.k; r.value=h.k; if(h.k==='X')r.checked=true;
+    var l=el('label',null,h.name); l.htmlFor=r.id;
+    $('houseq').appendChild(r); $('houseq').appendChild(l);
+  });
+  function val(name){var e=document.querySelector('input[name="'+name+'"]:checked');return e?e.value:null}
+  function readForm(){
+    var party=+val('party')||2, golf=Math.min(+(val('golf')||0),party);
+    var trips=TRIPS.filter(function(t){return $('f-t-'+t.k).checked}).map(function(t){return t.k});
+    return {name:$('f-name').value.trim().slice(0,60),party:party,golfers:golf,trips:trips,fav:val('fav'),house:val('house')||'X',note:$('f-note').value.trim().slice(0,300)};
+  }
+  function syncForm(){
+    var single=val('party')==='1';
+    $('f-g2').disabled=single; if(single && $('f-g2').checked){$('f-g1').checked=true}
+    TRIPS.forEach(function(t){ $('tq-'+t.k).classList.toggle('on',$('f-t-'+t.k).checked) });
+    var f=readForm(), t=f.fav?tripBy(f.fav):null;
+    if(!t){ $('est-a').textContent='—'; $('est-h').textContent='Star a favorite date to see it'; return; }
+    var h=houseBy(f.house), use=(h&&h.price[t.k])?h:HOUSES[0];
+    var cost=use.price[t.k]/PEOPLE*f.party + t.golf*f.golfers;
+    $('est-a').textContent=(t.est&&f.golfers?'~':'')+money(cost);
+    var note=(h&&use!==h)?' ('+h.name+' not priced for these dates yet)':'';
+    $('est-h').textContent=t.name+' · '+use.name+note+' · house + golf';
+  }
+  document.querySelectorAll('input[name="party"],input[name="golf"],input[name="house"]').forEach(function(i){i.addEventListener('change',syncForm)});
+  syncForm();
+
+  function setMsg(t,cls){var m=$('msg');m.textContent=t;m.className='msg '+(cls||'')}
+  function gate(text){var g=$('gate');g.textContent=text;g.hidden=false}
+
+  var db=null, user=null, me=null, isOwner=false, rows=[], mine=null, loaded=false, readOnly=false;
+  $('save').disabled=true;
+
+  function render(){
+    var stat={}; TRIPS.forEach(function(t){stat[t.k]={hh:0,ppl:0,g:0,fav:0}});
+    var hv={}; HOUSES.forEach(function(h){hv[h.k]=0});
+    var totalPpl=0;
+    rows.forEach(function(r){
+      totalPpl+=r.party||0;
+      (r.trips||[]).forEach(function(k){ if(stat[k]){stat[k].hh++;stat[k].ppl+=r.party||0;stat[k].g+=r.golfers||0} });
+      if(r.fav&&stat[r.fav])stat[r.fav].fav++;
+      if(hv[r.house]!=null)hv[r.house]++;
+    });
+    var best=null;
+    TRIPS.forEach(function(t){var s=stat[t.k]; if(s.ppl>0&&(!best||s.ppl>stat[best].ppl||(s.ppl===stat[best].ppl&&s.fav>stat[best].fav)))best=t.k});
+    var tb=$('score'); tb.textContent='';
+    TRIPS.forEach(function(t){
+      var s=stat[t.k], tr=el('tr');
+      tr.appendChild(el('td',null,t.name));
+      [s.hh,s.ppl,s.g,s.fav].forEach(function(v,i){tr.appendChild(el('td',(t.k===best&&i===1)?'hi':null,String(v)))});
+      tb.appendChild(tr);
+      var tc=tripCards[t.k]; tc.card.classList.toggle('lead',t.k===best);
+      var old=tc.title.querySelector('.badge'); if(old)old.remove();
+      if(t.k===best)tc.title.appendChild(el('span','badge','Leading'));
+    });
+    var bars=$('bars'); bars.textContent='';
+    bars.appendChild(el('span','lbl','House votes'));
+    var maxv=Math.max(1,Math.max.apply(null,HOUSES.map(function(h){return hv[h.k]})));
+    HOUSES.forEach(function(h){
+      var b=el('div','bar'); b.appendChild(el('span',null,h.name));
+      var tr=el('div','track'), f=el('div','fill'); f.style.width=(hv[h.k]/maxv*100)+'%'; tr.appendChild(f); b.appendChild(tr);
+      b.appendChild(el('span','num',String(hv[h.k]))); bars.appendChild(b);
+      houseVotes[h.k].textContent=hv[h.k]?hv[h.k]+' vote'+(hv[h.k]>1?'s':''):'';
+    });
+    $('who-sub').textContent=rows.length?rows.length+' household'+(rows.length>1?'s':'')+', '+totalPpl+' people so far. Updates live.':'Sign-ups and votes update live.';
+    var pl=$('people'); pl.textContent='';
+    if(!rows.length){ pl.appendChild(el('div','empty',loaded||!db?'No one has signed up yet. Be the first with the form above.':'Loading sign-ups…')); return; }
+    rows.slice().sort(function(a,b){return (a.at||'')<(b.at||'')?-1:1}).forEach(function(r){
+      var p=el('div','person'), r1=el('div','row1');
+      r1.appendChild(el('b',null,r.name||'Someone'));
+      var h=houseBy(r.house);
+      r1.appendChild(el('span','meta',(r.party===2?'Couple':'Single')+' · '+(r.golfers?r.golfers+' golfing':'not golfing')+' · '+(h?'wants '+h.name:'no house preference')));
+      p.appendChild(r1);
+      var ch=el('div','chips');
+      (r.trips||[]).forEach(function(k){var t=tripBy(k); if(t)ch.appendChild(el('span','chip'+(r.fav===k?' fav':''),(r.fav===k?'★ ':'')+t.name))});
+      p.appendChild(ch);
+      if(r.note)p.appendChild(el('div','note',r.note));
+      if(isOwner && r._id!==me){
+        var rm=el('button','rm','Remove'); rm.type='button';
+        rm.addEventListener('click',function(){
+          if(rm.dataset.armed){ rm.disabled=true; db.doc('signups/'+r._id).delete().catch(function(){rm.disabled=false;rm.textContent='Could not remove'}); }
+          else { rm.dataset.armed='1'; rm.textContent='Tap again to remove'; }
+        });
+        p.appendChild(rm);
+      }
+      pl.appendChild(p);
+    });
+  }
+  render();
+
+  function fillFrom(d){
+    $('f-name').value=d.name||'';
+    $('f-p'+(d.party===1?1:2)).checked=true;
+    var gr=$('f-g'+(d.golfers||0)); if(gr)gr.checked=true;
+    TRIPS.forEach(function(t){ $('f-t-'+t.k).checked=(d.trips||[]).indexOf(t.k)>-1; $('f-f-'+t.k).checked=d.fav===t.k; });
+    var hr=$('f-h-'+(d.house||'X')); if(hr)hr.checked=true;
+    $('f-note').value=d.note||'';
+    syncForm();
+  }
+
+  async function start(){
+    setMsg('Connecting…');
+    try{ db=await claude.use('db'); user=await claude.use('user'); }catch(e){ db=null; }
+    if(!db||!user){ setMsg(''); gate('Sign-ups work when this page is open on claude.ai and you are signed in. You can still look at the dates and houses.'); render(); return; }
+    me=await user.id(); isOwner=await user.isOwner();
+    var canW=await user.can('data.write');
+    if(!me){ gate('Sign in to claude.ai to sign up.'); }
+    else if(canW===false && !isOwner){ readOnly=true; gate('You can see the sign-ups but can\'t add yours yet. Ask Thad to share the page with you as an editor.'); }
+    var timer=setTimeout(function(){ if(!loaded) setMsg('Sign-ups are slow to load. Check your connection.','err'); },10000);
+    db.collection('signups').onSnapshot(function(snap){
+      rows=snap.docs.filter(function(d){return d.exists}).map(function(d){var x=Object.assign({},d.data());x._id=d.id;return x});
+      if(!snap.metadata.fromCache){ loaded=true; clearTimeout(timer); }
+      var own=null; rows.forEach(function(r){if(r._id===me)own=r});
+      if(own && !mine) fillFrom(own);
+      mine=own;
+      $('save').textContent=mine?'Save changes':'Sign up';
+      $('leave').hidden=!mine;
+      if(me && !readOnly){ $('save').disabled=false; }
+      if($('msg').textContent==='Connecting…' || /slow to load/.test($('msg').textContent)) setMsg(mine?'You\'re signed up. Change anything and save.':'',mine?'ok':'');
+      render();
+    },function(err){ clearTimeout(timer); loaded=true; setMsg('Sign-ups could not load. Reload the page to try again.','err'); render(); });
+  }
+  start();
+
+  $('form').addEventListener('submit',async function(e){
+    e.preventDefault();
+    if(!db||!me||readOnly) return;
+    var f=readForm();
+    if(!f.name){ setMsg('Add your name so everyone knows who signed up.','err'); $('f-name').focus(); return; }
+    if(!f.trips.length){ setMsg('Check at least one date that works for you.','err'); return; }
+    var now=new Date().toISOString();
+    var body={name:f.name,party:f.party,golfers:f.golfers,trips:f.trips,fav:f.fav||null,house:f.house,note:f.note,at:(mine&&mine.at)||now,updated:now};
+    $('save').disabled=true; setMsg('Saving…');
+    try{ await db.doc('signups/'+me).set(body); setMsg(mine?'Changes saved.':'You\'re signed up.','ok'); }
+    catch(err){
+      if(err&&err.code==='invalid_argument'){ readOnly=true; gate('You can see the sign-ups but can\'t add yours yet. Ask Thad to share the page with you as an editor.'); setMsg(''); return; }
+      setMsg('Could not save. Try again in a moment.','err');
+    }
+    $('save').disabled=false;
+  });
+  $('leave').addEventListener('click',async function(){
+    var b=$('leave');
+    if(!b.dataset.armed){ b.dataset.armed='1'; b.textContent='Tap again to remove'; return; }
+    b.disabled=true;
+    try{ await db.doc('signups/'+me).delete(); mine=null; b.hidden=true; setMsg('Your sign-up was removed.','ok'); $('save').textContent='Sign up'; }
+    catch(err){ setMsg('Could not remove it. Try again.','err'); }
+    b.disabled=false; delete b.dataset.armed; b.textContent='Remove my sign-up';
+  });
+})();
+</script>
+
+</body>
+</html>
