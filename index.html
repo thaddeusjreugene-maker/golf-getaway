@@ -3,14 +3,66 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* ===== Apple-style refresh: system type, quiet greys, one blue accent ===== */
+:root{
+  --bg:#f5f5f7; --card:#ffffff; --fg:#1d1d1f; --muted:#6e6e73; --line:#e3e3e8;
+  --green:#0071e3; --green-soft:#e8f1fc; --on-green:#ffffff; --sand:#0071e3; --sand-soft:#eef4fd; --bad:#d70015; --lead:#248a3d;
+  --display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --body:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#000000; --card:#1c1c1e; --fg:#f5f5f7; --muted:#a1a1a6; --line:#2c2c2e;
+  --green:#2997ff; --green-soft:#0f2238; --on-green:#ffffff; --sand:#2997ff; --sand-soft:#10233a; --bad:#ff6961; --lead:#30d158; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#000000; --card:#1c1c1e; --fg:#f5f5f7; --muted:#a1a1a6; --line:#2c2c2e;
+  --green:#2997ff; --green-soft:#0f2238; --on-green:#ffffff; --sand:#2997ff; --sand-soft:#10233a; --bad:#ff6961; --lead:#30d158; color-scheme:dark }
+body{font:16px/1.47 var(--body);letter-spacing:-.011em;-webkit-font-smoothing:antialiased}
+h1,h2,h3{letter-spacing:-.022em;font-weight:700}
+h2{font-size:28px;margin:44px 0 6px}
+.sub{font-size:15px}
+.top{background:var(--bg);color:var(--fg)}
+.top .wrap{padding-block:44px 8px;text-align:center}
+.eyebrow{color:var(--muted);opacity:1;letter-spacing:.02em;text-transform:none;font-size:15px;font-weight:600}
+.top h1{font-size:44px;line-height:1.05;margin:6px 0 12px;letter-spacing:-.03em}
+.top p{color:var(--muted);opacity:1;font-size:17px;max-width:30em;margin:0 auto}
+.cta{background:var(--green);color:var(--on-green);margin-top:22px;padding:12px 24px;font-size:17px;font-weight:500}
+.card,.trip,.house,.person,details{border:0;border-radius:18px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)}
+.trips{grid-template-columns:1fr 1fr;gap:14px}
+.trip{padding:18px 18px 16px}
+.trip .k{display:flex;justify-content:space-between;align-items:center;gap:8px;letter-spacing:.02em;text-transform:none;font-size:13px;font-weight:500}
+.trip h3{font-size:22px;margin:6px 0 2px}
+.trip .d{font-size:15px}
+.trip dl{font-size:15px;gap:6px 12px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.trip dt,.trip dd{white-space:nowrap}
+.trip.lead{box-shadow:0 0 0 2px var(--lead),0 4px 16px rgba(0,0,0,.06)}
+.badge{background:var(--lead);color:#fff;margin:0;font-size:12px;font-weight:600;padding:3px 10px}
+.house{padding:16px 18px}
+.house b{font-size:17px}
+.house .v{color:var(--lead)}
+.seg label{border-radius:999px;border-width:1px;background:var(--card);padding:9px 16px;font-size:15px}
+.seg input:checked + label{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.tq{border-width:1px;border-radius:14px;background:var(--card);padding:12px 14px}
+.tq.on{border-color:var(--green);box-shadow:0 0 0 1px var(--green)}
+.tq .t{font-size:15px}
+.est{border-radius:16px;padding:16px 18px}
+.est .a{font-size:30px;font-weight:700;letter-spacing:-.02em}
+input[type=text],textarea{background:var(--card);border-radius:12px;font-size:17px;padding:12px 14px}
+.btn{font-size:17px;font-weight:500;padding:12px 26px}
+.notice{border-radius:14px}
+.score th{background:transparent;text-transform:none;letter-spacing:0;font-size:13px;font-weight:600}
+.score th,.score td{border:0;border-bottom:1px solid var(--line);padding:10px 6px}
+.score td.hi{background:transparent;color:var(--lead)}
+.bar .track{border:0;height:8px}
+.bar .fill{background:var(--green)}
+.chip.fav{background:var(--green-soft);border-color:transparent;color:var(--green)}
+summary{font-family:var(--body);font-size:17px;padding:16px 18px}
+@media (max-width:560px){ .trips{grid-template-columns:1fr} .top h1{font-size:38px} h2{font-size:26px} }
+</style>
 </head>
 <body>
 <title>Golf Getaway 2027</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap">
 <style>
 /* Layout: one narrow column, read top to bottom — pick dates, see houses, sign up, see who's in. Scorecard grid for the tallies. */
 :root{
@@ -133,8 +185,8 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
 
 <div class="top">
   <div class="wrap">
-    <div class="eyebrow">Jacksonville &amp; St. Augustine</div>
-    <h1>Golf Getaway 2027</h1>
+    <div class="eyebrow">Jacksonville &amp; St. Augustine · 2027</div>
+    <h1>Golf Getaway</h1>
     <p>A week of golf, a big house with room for everyone, and evenings together. Pick the dates that work, vote on the house, and sign up.</p>
     <a class="cta" href="#signup">Sign up</a>
   </div>
@@ -323,12 +375,12 @@ window.FIREBASE_CONFIG = {
   var tripCards={};
   TRIPS.forEach(function(t){
     var c=el('div','trip');
-    c.appendChild(el('div','k',t.n+' nights · '+t.r+' rounds'));
+    var kk=el('div','k',t.n+' nights · '+t.r+' rounds'); c.appendChild(kk);
     var h=el('h3',null,t.name); c.appendChild(h);
     c.appendChild(el('div','d',t.d));
     var dl=el('dl'), hp=HOUSES[0].price[t.k]/PEOPLE, p=t.est?'~':'';
-    [['House, per person',money(hp)],['Golf, per golfer',p+money(t.golf)],['Couple, one golfs',p+money(hp*2+t.golf)],['Couple, both golf',p+money(hp*2+t.golf*2)]].forEach(function(r){dl.appendChild(el('dt',null,r[0]));dl.appendChild(el('dd',null,r[1]))});
-    c.appendChild(dl); $('trips').appendChild(c); tripCards[t.k]={card:c,title:h};
+    [['House, per person',money(hp)],['Golf, per golfer',p+money(t.golf)],['Couple, one golfer',p+money(hp*2+t.golf)],['Couple, both golf',p+money(hp*2+t.golf*2)]].forEach(function(r){dl.appendChild(el('dt',null,r[0]));dl.appendChild(el('dd',null,r[1]))});
+    c.appendChild(dl); $('trips').appendChild(c); tripCards[t.k]={card:c,title:kk};
   });
   // static: houses
   var houseVotes={};
