@@ -327,7 +327,7 @@ window.FIREBASE_CONFIG = {
     var h=el('h3',null,t.name); c.appendChild(h);
     c.appendChild(el('div','d',t.d));
     var dl=el('dl'), hp=HOUSES[0].price[t.k]/PEOPLE, p=t.est?'~':'';
-    [['House, per person',money(hp)],['Golf, per golfer',p+money(t.golf)],['Couple, both golf',p+money(hp*2+t.golf*2)]].forEach(function(r){dl.appendChild(el('dt',null,r[0]));dl.appendChild(el('dd',null,r[1]))});
+    [['House, per person',money(hp)],['Golf, per golfer',p+money(t.golf)],['Couple, one golfs',p+money(hp*2+t.golf)],['Couple, both golf',p+money(hp*2+t.golf*2)]].forEach(function(r){dl.appendChild(el('dt',null,r[0]));dl.appendChild(el('dd',null,r[1]))});
     c.appendChild(dl); $('trips').appendChild(c); tripCards[t.k]={card:c,title:h};
   });
   // static: houses
