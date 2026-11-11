@@ -246,7 +246,7 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   <div class="trip">
     <div class="k">5 nights · 4 rounds</div>
     <h3>What it costs</h3>
-    <div class="d">House split 12 ways, plus golf for golfers</div>
+    <div class="d">House split 13 ways, plus golf for golfers</div>
     <dl id="prices"></dl>
   </div>
   <p class="fine">House price is $4,747 for 5 nights with tax and fees. Golf is a $490 spring budget for four rounds plus about 7% sales tax, until we get real quotes. King &amp; Bear books 30 days out.</p>
@@ -336,7 +336,7 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
         <tr><td>Fri, Apr 2</td><td>King &amp; Bear finale, then the final group dinner and golf awards.</td></tr>
         <tr><td>Sat, Apr 3</td><td>Breakfast, clean up, head home.</td></tr>
       </table>
-      <p style="margin-top:10px">Tee times are around 8:00 AM, so golfers are back by early afternoon. Non-golfers get the beach, St. Augustine, or the pool.</p>
+      <p style="margin-top:10px">Eight golfers means two foursomes with back-to-back tee times around 8:00 AM, so golfers are back by early afternoon. Non-golfers get the beach, St. Augustine, or the pool.</p>
     </div>
   </details>
   <details>
@@ -413,13 +413,13 @@ window.FIREBASE_CONFIG = {
 </script>
 <script>
 (function(){
-  var HOUSE=4747, PEOPLE=12, GOLF=524.30, GOLF_EST=true, TRIP='S5';
+  var HOUSE=4747, PEOPLE=13, GOLF=524.30, GOLF_EST=true, TRIP='S5';
   function $(id){return document.getElementById(id)}
   function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
   function money(v){return '$'+Math.round(v).toLocaleString('en-US')}
   var hp=HOUSE/PEOPLE, g=(GOLF_EST?'~':'');
 
-  [['House, per person',money(hp)],['Golf, per golfer',g+money(GOLF)],['Single, golfing',g+money(hp+GOLF)],['Couple, no golf',money(hp*2)],['Couple, one golfer',g+money(hp*2+GOLF)],['Couple, both golf',g+money(hp*2+GOLF*2)]].forEach(function(r){
+  [['House, per person',money(hp)],['House, per person if 14',money(HOUSE/14)],['Golf, per golfer',g+money(GOLF)],['Single, golfing',g+money(hp+GOLF)],['Couple, no golf',money(hp*2)],['Couple, one golfer',g+money(hp*2+GOLF)],['Couple, both golf',g+money(hp*2+GOLF*2)]].forEach(function(r){
     $('prices').appendChild(el('dt',null,r[0])); $('prices').appendChild(el('dd',null,r[1]));
   });
 
