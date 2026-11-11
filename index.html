@@ -249,13 +249,13 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     <div class="d">House split 12 ways, plus golf for golfers</div>
     <dl id="prices"></dl>
   </div>
-  <p class="fine">House price is before tax; final prices with tax are coming. Golf prices are spring estimates until we call the courses, and include about 7% sales tax.</p>
+  <p class="fine">House price is $4,747 for 5 nights with tax and fees. Golf prices are spring estimates with about 7% sales tax until we call the courses.</p>
 
   <h2>Where we're staying</h2>
   <p class="sub">One house for the whole group.</p>
   <div class="house">
     <div><b>Country House</b></div>
-    <div class="p">$4,428</div>
+    <div class="p">$4,747</div>
     <div class="m"><span class="v" style="margin:0">Rated 10 · 119 reviews</span><br>Off SR 16, just east of World Golf Village. 8 bedrooms, 9 beds, sleeps 19. Private pool and a separate guesthouse. All four courses are within about 15 minutes. <a href="https://vrbo.onelink.me/ItNz/y057kpdi" target="_blank" rel="noopener">View on Vrbo</a></div>
   </div>
   <details>
@@ -412,7 +412,7 @@ window.FIREBASE_CONFIG = {
 </script>
 <script>
 (function(){
-  var HOUSE=4428, PEOPLE=12, GOLF=604.55, GOLF_EST=true, TRIP='S5';
+  var HOUSE=4747, PEOPLE=12, GOLF=604.55, GOLF_EST=true, TRIP='S5';
   function $(id){return document.getElementById(id)}
   function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
   function money(v){return '$'+Math.round(v).toLocaleString('en-US')}
@@ -432,7 +432,7 @@ window.FIREBASE_CONFIG = {
     $('f-g2').disabled=single; if(single && $('f-g2').checked){$('f-g1').checked=true}
     var f=readForm();
     $('est-a').textContent=(GOLF_EST&&f.golfers?'~':'')+money(hp*f.party+GOLF*f.golfers);
-    $('est-h').textContent=(f.party===2?'2 people':'1 person')+', '+(f.golfers?f.golfers+' golfing':'no golf')+' · house + golf, before tax';
+    $('est-h').textContent=(f.party===2?'2 people':'1 person')+', '+(f.golfers?f.golfers+' golfing':'no golf')+' · house + golf, with tax';
   }
   document.querySelectorAll('input[name="party"],input[name="golf"]').forEach(function(i){i.addEventListener('change',syncForm)});
   syncForm();
