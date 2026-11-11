@@ -334,7 +334,7 @@ footer{margin-top:56px}
   </div>
   <div class="people" id="people"></div>
 
-  <h2>Final cost</h2>
+  <h2>Final house cost</h2>
   <p class="sub" id="fc-sub">Updates as people sign up. The house is split by everyone who's going.</p>
   <div class="trip final">
     <div class="k" id="fc-k">Waiting on sign-ups</div>
@@ -482,13 +482,13 @@ window.FIREBASE_CONFIG = {
     var ft=$('fc-table'); ft.textContent='';
     if(ppl>0){
       var each=HOUSE/ppl;
-      $('fc-k').textContent=ppl+' '+(ppl===1?'person':'people')+' · '+golfers+' '+(golfers===1?'golfer':'golfers');
-      $('fc-h').textContent=money(each)+' per person for the house';
-      $('fc-d').textContent='$4,747 ÷ '+ppl+' people. Golf is '+g+money(GOLF)+' per golfer on top of that.';
-      [['Single, no golf',money(each)],['Single golfer',g+money(each+GOLF)],['Couple, no golf',money(each*2)],['Couple, one golfer',g+money(each*2+GOLF),true],['Couple, both golf',g+money(each*2+GOLF*2)]].forEach(function(r){
+      $('fc-k').textContent=ppl+' '+(ppl===1?'person':'people')+' signed up';
+      $('fc-h').textContent=money(each)+' per person';
+      $('fc-d').textContent='$4,747 ÷ '+ppl+' people';
+      [['Per person',money(each)],['Per couple',money(each*2),true]].forEach(function(r){
         var tr=el('tr',r[2]?'em':null); tr.appendChild(el('td',null,r[0])); tr.appendChild(el('td',null,r[1])); ft.appendChild(tr);
       });
-      var tot=el('tr','sum'); tot.appendChild(el('td',null,'Whole group, house + golf')); tot.appendChild(el('td',null,g+money(HOUSE+GOLF*golfers))); ft.appendChild(tot);
+      var tot=el('tr','sum'); tot.appendChild(el('td',null,'House total')); tot.appendChild(el('td',null,money(HOUSE))); ft.appendChild(tot);
     } else {
       $('fc-k').textContent='Waiting on sign-ups'; $('fc-h').textContent='—';
       $('fc-d').textContent='The house total of $4,747 gets divided by the number of people who sign up.';
@@ -498,8 +498,7 @@ window.FIREBASE_CONFIG = {
     rows.slice().sort(function(a,b){return (a.at||'')<(b.at||'')?-1:1}).forEach(function(r){
       var p=el('div','person'), r1=el('div','row1');
       r1.appendChild(el('b',null,r.name||'Someone'));
-      var share=ppl?(HOUSE/ppl)*(r.party||0)+GOLF*(r.golfers||0):0;
-      r1.appendChild(el('span','meta',(r.party===2?'Couple':'Single')+' · '+(r.golfers?r.golfers+' golfing':'not golfing')+(share?' · '+(r.golfers?g:'')+money(share):'')));
+      r1.appendChild(el('span','meta',(r.party===2?'Couple':'Single')+' · '+(r.golfers?r.golfers+' golfing':'not golfing')));
       p.appendChild(r1);
       if(Array.isArray(r.trips) && r.trips.length && r.trips.indexOf(TRIP)<0){
         var ch=el('div','chips'); ch.appendChild(el('span','chip warn','Signed up before the dates were set. Check that March works.')); p.appendChild(ch);
