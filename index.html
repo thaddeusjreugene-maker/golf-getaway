@@ -95,6 +95,16 @@ summary{padding:20px 22px}
 .dbody td{padding:12px 4px}
 .empty{padding:30px 16px}
 footer{margin-top:56px}
+
+/* ===== single-trip layout ===== */
+.house .v{margin-left:10px}
+.house .m a{white-space:nowrap}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tile{background:var(--card);border-radius:18px;padding:18px 12px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)}
+.tile b{display:block;font-family:var(--display);font-size:32px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile span{font-size:13px;color:var(--muted)}
+.chip.warn{background:var(--sand-soft);border-color:transparent;color:var(--fg)}
+.est .h{margin-top:2px}
 </style>
 </head>
 <body>
@@ -222,26 +232,51 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
 
 <div class="top">
   <div class="wrap">
-    <div class="eyebrow">Jacksonville &amp; St. Augustine · 2027</div>
+    <div class="eyebrow">St. Augustine · March 29 – April 3, 2027</div>
     <h1>Golf Getaway</h1>
-    <p>A week of golf, a big house with room for everyone, and evenings together. Pick the dates that work, vote on the house, and sign up.</p>
+    <p>Five nights at a country house near World Golf Village, four rounds of golf ending at King &amp; Bear, and evenings together.</p>
     <a class="cta" href="#signup">Sign up</a>
   </div>
 </div>
 
 <div class="wrap">
 
-  <h2>1. Pick your dates</h2>
-  <p class="sub">Four options. House prices are per person at the Country House with 12 people. Golf is extra for golfers.</p>
-  <div class="trips" id="trips"></div>
-  <p class="fine">Spring is peak golf season, so spring golf prices are estimates. June 7–12 or June 8–12 costs the same as the July dates.</p>
+  <h2>The trip</h2>
+  <p class="sub">Monday, March 29 to Saturday, April 3. Five nights, four rounds.</p>
+  <div class="trip">
+    <div class="k">5 nights · 4 rounds</div>
+    <h3>What it costs</h3>
+    <div class="d">House split 12 ways, plus golf for golfers</div>
+    <dl id="prices"></dl>
+  </div>
+  <p class="fine">House price is before tax; final prices with tax are coming. Golf prices are spring estimates until we call the courses, and include about 7% sales tax.</p>
 
-  <h2>2. The houses</h2>
-  <p class="sub">Vote for one when you sign up. Prices are the whole house for the 5-night July trip.</p>
-  <div class="houses" id="houses"></div>
+  <h2>Where we're staying</h2>
+  <p class="sub">One house for the whole group.</p>
+  <div class="house">
+    <div><b>Country House</b></div>
+    <div class="p">$4,428</div>
+    <div class="m"><span class="v" style="margin:0">Rated 10 · 119 reviews</span><br>Off SR 16, just east of World Golf Village. 8 bedrooms, 9 beds, sleeps 19. Private pool and a separate guesthouse. All four courses are within about 15 minutes. <a href="https://vrbo.onelink.me/ItNz/y057kpdi" target="_blank" rel="noopener">View on Vrbo</a></div>
+  </div>
+  <details>
+    <summary>Bedrooms</summary>
+    <div class="dbody">
+      <table>
+        <tr><td>Master</td><td>King</td></tr>
+        <tr><td>Guest Room 1</td><td>King</td></tr>
+        <tr><td>Couple 1</td><td>Queen</td></tr>
+        <tr><td>Couple 2</td><td>Queen</td></tr>
+        <tr><td>Sub Master</td><td>Queen</td></tr>
+        <tr><td>Guest Room 2</td><td>Queen</td></tr>
+        <tr><td>Kids Room</td><td>Twin + twin bunk</td></tr>
+        <tr><td>Study</td><td>Double sofa bed</td></tr>
+      </table>
+      <p style="margin-top:10px">5 full baths plus a powder room.</p>
+    </div>
+  </details>
 
-  <h2 id="signup">3. Sign up</h2>
-  <p class="sub">One sign-up per household. No account needed. To change it later, come back on the same phone or computer.</p>
+  <h2 id="signup">Sign up</h2>
+  <p class="sub">One sign-up per household. Come back and change it anytime.</p>
   <div class="card">
     <div class="notice" id="gate" hidden></div>
     <form id="form" novalidate>
@@ -265,20 +300,11 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
         </div>
       </div>
       <div>
-        <span class="lbl">Which dates work for you?</span>
-        <p class="sub" style="margin:-2px 0 8px">Check every one you could make, and star your favorite.</p>
-        <div class="tripq" id="tripq"></div>
-      </div>
-      <div>
-        <span class="lbl">Which house do you want?</span>
-        <div class="seg" id="houseq" role="radiogroup" aria-label="House vote"></div>
-      </div>
-      <div>
         <label class="lbl" for="f-note">Anything else? <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
         <textarea id="f-note" maxlength="300" placeholder="e.g. We can't leave until Tuesday"></textarea>
       </div>
       <div class="est" aria-live="polite">
-        <div><div class="lbl" style="margin:0">Your estimated cost</div><div class="h" id="est-h">Star a favorite date to see it</div></div>
+        <div><div class="lbl" style="margin:0">Your estimated cost</div><div class="h" id="est-h"></div></div>
         <div class="a" id="est-a">—</div>
       </div>
       <div class="actions">
@@ -289,53 +315,50 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     </form>
   </div>
 
-  <h2>4. Who's in</h2>
-  <p class="sub" id="who-sub">Sign-ups and votes update live.</p>
-  <div class="card">
-    <div class="score"><table>
-      <thead><tr><th>Dates</th><th>Signups</th><th>People</th><th>Golfers</th><th>★</th></tr></thead>
-      <tbody id="score"></tbody>
-    </table></div>
-    <div class="bars" id="bars"></div>
+  <h2>Who's in</h2>
+  <p class="sub" id="who-sub">Sign-ups update live.</p>
+  <div class="tiles">
+    <div class="tile"><b id="t-hh">0</b><span>Households</span></div>
+    <div class="tile"><b id="t-ppl">0</b><span>People</span></div>
+    <div class="tile"><b id="t-g">0</b><span>Golfers</span></div>
   </div>
   <div class="people" id="people"></div>
 
   <h2>Trip details</h2>
   <details>
+    <summary>The week</summary>
+    <div class="dbody">
+      <table>
+        <tr><td>Mon, Mar 29</td><td>Drive down, check in, groceries, burgers at the house, pool.</td></tr>
+        <tr><td>Tue, Mar 30</td><td>Round 1 at South Hampton. Pool and dinner at the house.</td></tr>
+        <tr><td>Wed, Mar 31</td><td>Round 2 at Slammer &amp; Squire. Group dinner in historic St. Augustine.</td></tr>
+        <tr><td>Thu, Apr 1</td><td>Round 3 at St. Johns. Steak night at the house.</td></tr>
+        <tr><td>Fri, Apr 2</td><td>King &amp; Bear finale, then the final group dinner and golf awards.</td></tr>
+        <tr><td>Sat, Apr 3</td><td>Breakfast, clean up, head home.</td></tr>
+      </table>
+      <p style="margin-top:10px">Tee times are around 8:00 AM, so golfers are back by early afternoon. Non-golfers get the beach, St. Augustine, or the pool.</p>
+    </div>
+  </details>
+  <details>
     <summary>Golf courses</summary>
     <div class="dbody">
-      <p>Every round starts around 8:00 AM with back-to-back tee times. The 4-day trips skip Slammer &amp; Squire.</p>
       <table>
         <tr><td>Round 1</td><td>The Golf Club at South Hampton<br><span class="phone">904-287-7529</span></td></tr>
-        <tr><td>Round 2</td><td>Slammer &amp; Squire, World Golf Village (5-day trips)<br><span class="phone">904-940-6088</span></td></tr>
+        <tr><td>Round 2</td><td>Slammer &amp; Squire, World Golf Village<br><span class="phone">904-940-6088</span></td></tr>
         <tr><td>Round 3</td><td>St. Johns Golf &amp; Country Club<br><span class="phone">904-940-3215 or 904-940-3200</span></td></tr>
         <tr><td>Finale</td><td>King &amp; Bear, the only course Palmer and Nicklaus designed together<br><span class="phone">904-940-6088</span></td></tr>
       </table>
     </div>
   </details>
   <details>
-    <summary>What the week looks like</summary>
-    <div class="dbody">
-      <table>
-        <tr><td>Arrival</td><td>Drive down, check in, groceries, burgers at the house, pool.</td></tr>
-        <tr><td>Golf days</td><td>Golf in the morning, back by early afternoon. Non-golfers get the beach, St. Augustine, or the pool.</td></tr>
-        <tr><td>Wednesday</td><td>Group trip to historic St. Augustine for dinner and dessert.</td></tr>
-        <tr><td>Thursday</td><td>Steak night at the house.</td></tr>
-        <tr><td>Friday</td><td>King &amp; Bear finale, then the final group dinner and golf awards.</td></tr>
-        <tr><td>Saturday</td><td>Breakfast, clean up, head home.</td></tr>
-      </table>
-    </div>
-  </details>
-  <details>
     <summary>What's not included</summary>
     <div class="dbody">
-      <p>Prices cover your share of the house and green fees with tax. Food, gas, and spending money are extra. Plan on about $35–$50 per person per night for groceries and one dinner out.</p>
+      <p>Prices cover your share of the house and green fees. Food, gas, and spending money are extra. Plan on about $35–$50 per person per night for groceries and one dinner out.</p>
     </div>
   </details>
 
   <footer>Planning page · Prices are estimates until booked</footer>
 </div>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -389,82 +412,29 @@ window.FIREBASE_CONFIG = {
 </script>
 <script>
 (function(){
-  var TRIPS=[
-    {k:'J4',name:'4 days in July',d:'Tue Jul 20 – Sat Jul 24',n:4,r:3,golf:294.25},
-    {k:'J5',name:'5 days in July',d:'Mon Jul 19 – Sat Jul 24',n:5,r:4,golf:374.50},
-    {k:'S4',name:'4 days in spring',d:'Tue Mar 30 – Sat Apr 3',n:4,r:3,golf:411.95,est:true},
-    {k:'S5',name:'5 days in spring',d:'Mon Mar 29 – Sat Apr 3',n:5,r:4,golf:604.55,est:true}
-  ];
-  var HOUSES=[
-    {k:'A',name:'Country House',where:'World Golf Village · pool · 8 bedrooms',rating:'Rated 10 (119 reviews)',price:{J4:4067,J5:5030,S4:3595,S5:4428},url:'https://vrbo.onelink.me/ItNz/y057kpdi'},
-    {k:'B',name:'4 Homes in a Row',where:'Near downtown St. Augustine · 12 bedrooms',rating:'Rated 10 (1 review)',price:{J4:3851,J5:4497},url:'https://vrbo.onelink.me/ItNz/xu2fx89q'},
-    {k:'C',name:'3 Homes in a Row',where:'Near downtown St. Augustine · 9 bedrooms',rating:'Rated 10 (3 reviews)',price:{J4:2956,J5:3457},url:'https://vrbo.onelink.me/ItNz/kol5hgzs'},
-    {k:'D',name:'Canal Home',where:'Hibernia, Clay County · boat & kayak · 8 bedrooms',rating:'Rated 9.2 (34 reviews)',price:{J4:3958,J5:4776},url:'https://vrbo.onelink.me/ItNz/6akelr3s'}
-  ];
-  var PEOPLE=12;
+  var HOUSE=4428, PEOPLE=12, GOLF=604.55, GOLF_EST=true, TRIP='S5';
   function $(id){return document.getElementById(id)}
   function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
   function money(v){return '$'+Math.round(v).toLocaleString('en-US')}
-  function tripBy(k){for(var i=0;i<TRIPS.length;i++)if(TRIPS[i].k===k)return TRIPS[i];return null}
-  function houseBy(k){for(var i=0;i<HOUSES.length;i++)if(HOUSES[i].k===k)return HOUSES[i];return null}
+  var hp=HOUSE/PEOPLE, g=(GOLF_EST?'~':'');
 
-  // static: date options
-  var tripCards={};
-  TRIPS.forEach(function(t){
-    var c=el('div','trip');
-    var kk=el('div','k',t.n+' nights · '+t.r+' rounds'); c.appendChild(kk);
-    var h=el('h3',null,t.name); c.appendChild(h);
-    c.appendChild(el('div','d',t.d));
-    var dl=el('dl'), hp=HOUSES[0].price[t.k]/PEOPLE, p=t.est?'~':'';
-    [['House, per person',money(hp)],['Golf, per golfer',p+money(t.golf)],['Couple, one golfer',p+money(hp*2+t.golf)],['Couple, both golf',p+money(hp*2+t.golf*2)]].forEach(function(r){dl.appendChild(el('dt',null,r[0]));dl.appendChild(el('dd',null,r[1]))});
-    c.appendChild(dl); $('trips').appendChild(c); tripCards[t.k]={card:c,title:kk};
-  });
-  // static: houses
-  var houseVotes={};
-  HOUSES.forEach(function(hs){
-    var c=el('div','house'), top=el('div');
-    top.appendChild(el('b',null,hs.name)); var v=el('span','v',''); top.appendChild(v); c.appendChild(top);
-    c.appendChild(el('div','p',money(hs.price.J5)));
-    var m=el('div','m'); m.appendChild(document.createTextNode(hs.where+' · '+hs.rating+' · '));
-    var a=el('a',null,'View on Vrbo'); a.href=hs.url; a.target='_blank'; a.rel='noopener'; m.appendChild(a);
-    c.appendChild(m); $('houses').appendChild(c); houseVotes[hs.k]=v;
+  [['House, per person',money(hp)],['Golf, per golfer',g+money(GOLF)],['Single, golfing',g+money(hp+GOLF)],['Couple, no golf',money(hp*2)],['Couple, one golfer',g+money(hp*2+GOLF)],['Couple, both golf',g+money(hp*2+GOLF*2)]].forEach(function(r){
+    $('prices').appendChild(el('dt',null,r[0])); $('prices').appendChild(el('dd',null,r[1]));
   });
 
-  // form
-  TRIPS.forEach(function(t){
-    var row=el('div','tq'); row.id='tq-'+t.k;
-    var cb=document.createElement('input'); cb.type='checkbox'; cb.id='f-t-'+t.k;
-    var lab=el('label','t',t.name); lab.htmlFor=cb.id; lab.appendChild(el('span',null,t.d));
-    var st=el('label','star'); var rb=document.createElement('input'); rb.type='radio'; rb.name='fav'; rb.id='f-f-'+t.k; rb.value=t.k;
-    st.appendChild(rb); st.appendChild(document.createTextNode('Favorite'));
-    row.appendChild(cb); row.appendChild(lab); row.appendChild(st); $('tripq').appendChild(row);
-    cb.addEventListener('change',function(){ if(!cb.checked && rb.checked) rb.checked=false; syncForm(); });
-    rb.addEventListener('change',function(){ if(rb.checked) cb.checked=true; syncForm(); });
-  });
-  HOUSES.concat([{k:'X',name:'No preference'}]).forEach(function(h){
-    var r=document.createElement('input'); r.type='radio'; r.name='house'; r.id='f-h-'+h.k; r.value=h.k; if(h.k==='X')r.checked=true;
-    var l=el('label',null,h.name); l.htmlFor=r.id;
-    $('houseq').appendChild(r); $('houseq').appendChild(l);
-  });
   function val(name){var e=document.querySelector('input[name="'+name+'"]:checked');return e?e.value:null}
   function readForm(){
     var party=+val('party')||2, golf=Math.min(+(val('golf')||0),party);
-    var trips=TRIPS.filter(function(t){return $('f-t-'+t.k).checked}).map(function(t){return t.k});
-    return {name:$('f-name').value.trim().slice(0,60),party:party,golfers:golf,trips:trips,fav:val('fav'),house:val('house')||'X',note:$('f-note').value.trim().slice(0,300)};
+    return {name:$('f-name').value.trim().slice(0,60),party:party,golfers:golf,note:$('f-note').value.trim().slice(0,300)};
   }
   function syncForm(){
     var single=val('party')==='1';
     $('f-g2').disabled=single; if(single && $('f-g2').checked){$('f-g1').checked=true}
-    TRIPS.forEach(function(t){ $('tq-'+t.k).classList.toggle('on',$('f-t-'+t.k).checked) });
-    var f=readForm(), t=f.fav?tripBy(f.fav):null;
-    if(!t){ $('est-a').textContent='—'; $('est-h').textContent='Star a favorite date to see it'; return; }
-    var h=houseBy(f.house), use=(h&&h.price[t.k])?h:HOUSES[0];
-    var cost=use.price[t.k]/PEOPLE*f.party + t.golf*f.golfers;
-    $('est-a').textContent=(t.est&&f.golfers?'~':'')+money(cost);
-    var note=(h&&use!==h)?' ('+h.name+' not priced for these dates yet)':'';
-    $('est-h').textContent=t.name+' · '+use.name+note+' · house + golf';
+    var f=readForm();
+    $('est-a').textContent=(GOLF_EST&&f.golfers?'~':'')+money(hp*f.party+GOLF*f.golfers);
+    $('est-h').textContent=(f.party===2?'2 people':'1 person')+', '+(f.golfers?f.golfers+' golfing':'no golf')+' · house + golf, before tax';
   }
-  document.querySelectorAll('input[name="party"],input[name="golf"],input[name="house"]').forEach(function(i){i.addEventListener('change',syncForm)});
+  document.querySelectorAll('input[name="party"],input[name="golf"]').forEach(function(i){i.addEventListener('change',syncForm)});
   syncForm();
 
   function setMsg(t,cls){var m=$('msg');m.textContent=t;m.className='msg '+(cls||'')}
@@ -474,48 +444,20 @@ window.FIREBASE_CONFIG = {
   $('save').disabled=true;
 
   function render(){
-    var stat={}; TRIPS.forEach(function(t){stat[t.k]={hh:0,ppl:0,g:0,fav:0}});
-    var hv={}; HOUSES.forEach(function(h){hv[h.k]=0});
-    var totalPpl=0;
-    rows.forEach(function(r){
-      totalPpl+=r.party||0;
-      (r.trips||[]).forEach(function(k){ if(stat[k]){stat[k].hh++;stat[k].ppl+=r.party||0;stat[k].g+=r.golfers||0} });
-      if(r.fav&&stat[r.fav])stat[r.fav].fav++;
-      if(hv[r.house]!=null)hv[r.house]++;
-    });
-    var best=null;
-    TRIPS.forEach(function(t){var s=stat[t.k]; if(s.ppl>0&&(!best||s.ppl>stat[best].ppl||(s.ppl===stat[best].ppl&&s.fav>stat[best].fav)))best=t.k});
-    var tb=$('score'); tb.textContent='';
-    TRIPS.forEach(function(t){
-      var s=stat[t.k], tr=el('tr');
-      tr.appendChild(el('td',null,t.name));
-      [s.hh,s.ppl,s.g,s.fav].forEach(function(v,i){tr.appendChild(el('td',(t.k===best&&i===1)?'hi':null,String(v)))});
-      tb.appendChild(tr);
-      var tc=tripCards[t.k]; tc.card.classList.toggle('lead',t.k===best);
-      var old=tc.title.querySelector('.badge'); if(old)old.remove();
-      if(t.k===best)tc.title.appendChild(el('span','badge','Leading'));
-    });
-    var bars=$('bars'); bars.textContent='';
-    bars.appendChild(el('span','lbl','House votes'));
-    var maxv=Math.max(1,Math.max.apply(null,HOUSES.map(function(h){return hv[h.k]})));
-    HOUSES.forEach(function(h){
-      var b=el('div','bar'); b.appendChild(el('span',null,h.name));
-      var tr=el('div','track'), f=el('div','fill'); f.style.width=(hv[h.k]/maxv*100)+'%'; tr.appendChild(f); b.appendChild(tr);
-      b.appendChild(el('span','num',String(hv[h.k]))); bars.appendChild(b);
-      houseVotes[h.k].textContent=hv[h.k]?hv[h.k]+' vote'+(hv[h.k]>1?'s':''):'';
-    });
-    $('who-sub').textContent=rows.length?rows.length+' household'+(rows.length>1?'s':'')+', '+totalPpl+' people so far. Updates live.':'Sign-ups and votes update live.';
+    var ppl=0, golfers=0;
+    rows.forEach(function(r){ppl+=r.party||0; golfers+=r.golfers||0});
+    $('t-hh').textContent=rows.length; $('t-ppl').textContent=ppl; $('t-g').textContent=golfers;
+    $('who-sub').textContent=rows.length?'Updates live as people sign up.':'Sign-ups update live.';
     var pl=$('people'); pl.textContent='';
     if(!rows.length){ pl.appendChild(el('div','empty',loaded||!db?'No one has signed up yet. Be the first with the form above.':'Loading sign-ups…')); return; }
     rows.slice().sort(function(a,b){return (a.at||'')<(b.at||'')?-1:1}).forEach(function(r){
       var p=el('div','person'), r1=el('div','row1');
       r1.appendChild(el('b',null,r.name||'Someone'));
-      var h=houseBy(r.house);
-      r1.appendChild(el('span','meta',(r.party===2?'Couple':'Single')+' · '+(r.golfers?r.golfers+' golfing':'not golfing')+' · '+(h?'wants '+h.name:'no house preference')));
+      r1.appendChild(el('span','meta',(r.party===2?'Couple':'Single')+' · '+(r.golfers?r.golfers+' golfing':'not golfing')));
       p.appendChild(r1);
-      var ch=el('div','chips');
-      (r.trips||[]).forEach(function(k){var t=tripBy(k); if(t)ch.appendChild(el('span','chip'+(r.fav===k?' fav':''),(r.fav===k?'★ ':'')+t.name))});
-      p.appendChild(ch);
+      if(Array.isArray(r.trips) && r.trips.length && r.trips.indexOf(TRIP)<0){
+        var ch=el('div','chips'); ch.appendChild(el('span','chip warn','Signed up before the dates were set. Check that March works.')); p.appendChild(ch);
+      }
       if(r.note)p.appendChild(el('div','note',r.note));
       if(isOwner && r._id!==me){
         var rm=el('button','rm','Remove'); rm.type='button';
@@ -534,8 +476,6 @@ window.FIREBASE_CONFIG = {
     $('f-name').value=d.name||'';
     $('f-p'+(d.party===1?1:2)).checked=true;
     var gr=$('f-g'+(d.golfers||0)); if(gr)gr.checked=true;
-    TRIPS.forEach(function(t){ $('f-t-'+t.k).checked=(d.trips||[]).indexOf(t.k)>-1; $('f-f-'+t.k).checked=d.fav===t.k; });
-    var hr=$('f-h-'+(d.house||'X')); if(hr)hr.checked=true;
     $('f-note').value=d.note||'';
     syncForm();
   }
@@ -543,7 +483,7 @@ window.FIREBASE_CONFIG = {
   async function start(){
     setMsg('Connecting…');
     try{ db=await claude.use('db'); user=await claude.use('user'); }catch(e){ db=null; }
-    if(!db||!user){ setMsg(''); gate('Sign-ups aren\'t switched on yet. You can still look at the dates and houses.'); render(); return; }
+    if(!db||!user){ setMsg(''); gate('Sign-ups aren\'t switched on yet. You can still look at the trip details.'); render(); return; }
     me=await user.id(); isOwner=await user.isOwner();
     var canW=await user.can('data.write');
     if(!me){ gate('Sign-ups could not start. Reload the page to try again.'); }
@@ -569,9 +509,8 @@ window.FIREBASE_CONFIG = {
     if(!db||!me||readOnly) return;
     var f=readForm();
     if(!f.name){ setMsg('Add your name so everyone knows who signed up.','err'); $('f-name').focus(); return; }
-    if(!f.trips.length){ setMsg('Check at least one date that works for you.','err'); return; }
     var now=new Date().toISOString();
-    var body={name:f.name,party:f.party,golfers:f.golfers,trips:f.trips,fav:f.fav||null,house:f.house,note:f.note,at:(mine&&mine.at)||now,updated:now};
+    var body={name:f.name,party:f.party,golfers:f.golfers,note:f.note,trips:[TRIP],fav:TRIP,house:'A',at:(mine&&mine.at)||now,updated:now};
     $('save').disabled=true; setMsg('Saving…');
     try{ await db.doc('signups/'+me).set(body); setMsg(mine?'Changes saved.':'You\'re signed up.','ok'); }
     catch(err){
