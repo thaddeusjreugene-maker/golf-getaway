@@ -228,6 +228,14 @@ details[open] summary::after{content:"–"}
 footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
 @media (max-width:420px){ .trips{grid-template-columns:1fr} .bar{grid-template-columns:100px 1fr 24px} }
 @media (prefers-reduced-motion:no-preference){ .fill{transition:width .3s ease} }
+
+.pwrap{margin-top:18px;padding-top:6px;border-top:1px solid var(--line);overflow-x:auto}
+.ptable{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
+.ptable th{font-size:13px;font-weight:600;color:var(--muted);text-align:right;padding:10px 0 6px 12px;white-space:nowrap}
+.ptable td{padding:10px 0;border-top:1px solid var(--line);white-space:nowrap}
+.ptable td+td{text-align:right;padding-left:12px;font-weight:600}
+.ptable tr:nth-child(2) td{border-top:0}
+.ptable tr.em td{font-weight:700;color:var(--green)}
 </style>
 
 <div class="top">
@@ -246,8 +254,8 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   <div class="trip">
     <div class="k">5 nights · 4 rounds</div>
     <h3>What it costs</h3>
-    <div class="d">House split 13 ways, plus golf for golfers</div>
-    <dl id="prices"></dl>
+    <div class="d">13 people, or 14 if one more comes. Golf is ~$524 per golfer.</div>
+    <div class="pwrap"><table class="ptable" id="prices"></table></div>
   </div>
   <p class="fine">House price is $4,747 for 5 nights with tax and fees. Golf is a $490 spring budget for four rounds plus about 7% sales tax, until we get real quotes. King &amp; Bear books 30 days out.</p>
 
@@ -347,7 +355,7 @@ footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
         <tr><td>Wed, Mar 31</td><td>The Golf Club at South Hampton · ~$95<br><span class="phone">904-287-7529</span></td></tr>
         <tr><td>Thu, Apr 1</td><td>St. Johns Golf &amp; Country Club · ~$110<br><span class="phone">904-940-3215 or 904-940-3200</span></td></tr>
         <tr><td>Fri, Apr 2</td><td>King &amp; Bear, the only course Palmer and Nicklaus designed together · ~$205<br><span class="phone">904-940-6088</span></td></tr>
-        <tr><td>Total</td><td><b>~$490</b> per golfer before tax</td></tr>
+        <tr><td>Total</td><td><b>~$490</b> per golfer, ~$524 with tax</td></tr>
       </table>
     </div>
   </details>
@@ -419,9 +427,18 @@ window.FIREBASE_CONFIG = {
   function money(v){return '$'+Math.round(v).toLocaleString('en-US')}
   var hp=HOUSE/PEOPLE, g=(GOLF_EST?'~':'');
 
-  [['House, per person',money(hp)],['House, per person if 14',money(HOUSE/14)],['Golf, per golfer',g+money(GOLF)],['Single, golfing',g+money(hp+GOLF)],['Couple, no golf',money(hp*2)],['Couple, one golfer',g+money(hp*2+GOLF)],['Couple, both golf',g+money(hp*2+GOLF*2)]].forEach(function(r){
-    $('prices').appendChild(el('dt',null,r[0])); $('prices').appendChild(el('dd',null,r[1]));
-  });
+  (function(){
+    var t=$('prices'), cols=[13,14];
+    var hr=el('tr'); hr.appendChild(el('th',null,'')); cols.forEach(function(n){hr.appendChild(el('th',null,n+' people'))}); t.appendChild(hr);
+    [['House, per person',function(h){return money(h)}],
+     ['Couple, no golf',function(h){return money(h*2)}],
+     ['Single golfer',function(h){return g+money(h+GOLF)}],
+     ['Couple, one golfer',function(h){return g+money(h*2+GOLF)},true],
+     ['Couple, both golf',function(h){return g+money(h*2+GOLF*2)}]].forEach(function(r){
+      var tr=el('tr',r[2]?'em':null); tr.appendChild(el('td',null,r[0]));
+      cols.forEach(function(n){tr.appendChild(el('td',null,r[1](HOUSE/n)))}); t.appendChild(tr);
+    });
+  })();
 
   function val(name){var e=document.querySelector('input[name="'+name+'"]:checked');return e?e.value:null}
   function readForm(){
