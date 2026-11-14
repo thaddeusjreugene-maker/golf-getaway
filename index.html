@@ -259,13 +259,13 @@ footer{margin-top:56px}
     <div class="d">13 people, or 14 if one more comes. Golf is ~$524 per golfer.</div>
     <div class="pwrap"><table class="ptable" id="prices"></table></div>
   </div>
-  <p class="fine">House price is $4,747 for 5 nights with tax and fees. Golf is a $490 spring budget for four rounds plus about 7% sales tax, until we get real quotes. King &amp; Bear books 30 days out.</p>
+  <p class="fine">House price is $4,450.20 for 5 nights with tax and fees. Golf is a $490 spring budget for four rounds plus about 7% sales tax, until we get real quotes. King &amp; Bear books 30 days out.</p>
 
   <h2>Where we're staying</h2>
   <p class="sub">One house for the whole group.</p>
   <div class="house">
     <div><b>Country House</b></div>
-    <div class="p">$4,747</div>
+    <div class="p">$4,450.20</div>
     <div class="m"><span class="v" style="margin:0">Rated 10 · 119 reviews</span><br>Off SR 16, just east of World Golf Village. 8 bedrooms, 9 beds, sleeps 19. Private pool and a separate guesthouse. All four courses are within about 20 minutes. <a href="https://vrbo.onelink.me/ItNz/y057kpdi" target="_blank" rel="noopener">View on Vrbo</a></div>
   </div>
   <details>
@@ -339,7 +339,7 @@ footer{margin-top:56px}
   <div class="trip final">
     <div class="k" id="fc-k">Waiting on sign-ups</div>
     <h3 id="fc-h">—</h3>
-    <div class="d" id="fc-d">The house total of $4,747 gets divided by the number of people who sign up.</div>
+    <div class="d" id="fc-d">The house total of $4,450.20 gets divided by the number of people who sign up.</div>
     <div class="pwrap"><table class="ptable" id="fc-table"></table></div>
   </div>
 
@@ -433,7 +433,7 @@ window.FIREBASE_CONFIG = {
 </script>
 <script>
 (function(){
-  var HOUSE=4747, PEOPLE=13, GOLF=524.30, GOLF_EST=true, TRIP='S5';
+  var HOUSE=4450.20, PEOPLE=13, GOLF=524.30, GOLF_EST=true, TRIP='S5';
   function $(id){return document.getElementById(id)}
   function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
   function money(v){return '$'+Math.round(v).toLocaleString('en-US')}
@@ -484,14 +484,14 @@ window.FIREBASE_CONFIG = {
       var each=HOUSE/ppl;
       $('fc-k').textContent=ppl+' '+(ppl===1?'person':'people')+' signed up';
       $('fc-h').textContent=money(each)+' per person';
-      $('fc-d').textContent='$4,747 ÷ '+ppl+' people';
+      $('fc-d').textContent='$4,450.20 ÷ '+ppl+' people';
       [['Per person',money(each)],['Per couple',money(each*2),true]].forEach(function(r){
         var tr=el('tr',r[2]?'em':null); tr.appendChild(el('td',null,r[0])); tr.appendChild(el('td',null,r[1])); ft.appendChild(tr);
       });
       var tot=el('tr','sum'); tot.appendChild(el('td',null,'House total')); tot.appendChild(el('td',null,money(HOUSE))); ft.appendChild(tot);
     } else {
       $('fc-k').textContent='Waiting on sign-ups'; $('fc-h').textContent='—';
-      $('fc-d').textContent='The house total of $4,747 gets divided by the number of people who sign up.';
+      $('fc-d').textContent='The house total of $4,450.20 gets divided by the number of people who sign up.';
     }
     var pl=$('people'); pl.textContent='';
     if(!rows.length){ pl.appendChild(el('div','empty',loaded||!db?'No one has signed up yet. Be the first with the form above.':'Loading sign-ups…')); return; }
